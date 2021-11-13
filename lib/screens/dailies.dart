@@ -1,26 +1,24 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sucursales_app/models/sucursal.dart';
-import 'package:sucursales_app/screens/edit_sucursal.dart';
+import 'package:sucursales_app/models/dailies_sales.dart';
+import 'package:sucursales_app/screens/edit_dailies.dart';
 
-class Sucursals extends StatelessWidget {
-  const Sucursals({Key key}) : super(key: key);
+class Dailies extends StatelessWidget {
+  const Dailies({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final sucursals = Provider.of<List<Sucursal>>(context);
+    final dailies = Provider.of<List<DailiesSales>>(context);
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Sucursales'),
+          title: Text('Ventas diarias'),
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => EditSucursal()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => EditDailiesSales()));
                 },
                 icon: Icon(
                   Icons.add,
@@ -28,17 +26,16 @@ class Sucursals extends StatelessWidget {
                 )),
           ],
         ),
-        body: (sucursals != null)
+        body: (dailies != null)
             ? ListView.builder(
-                itemCount: sucursals.length,
+                itemCount: dailies.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(sucursals[index].name),
-                    trailing: Text(sucursals[index].phone.toString()),
+                    title: Text(dailies[index].description),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
-                              EditSucursal(sucursals[index])));
+                              EditDailiesSales(dailies[index])));
                     },
                   );
                 })

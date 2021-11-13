@@ -1,24 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sucursales_app/models/sucursal.dart';
+import 'package:sucursales_app/models/dailies_sales.dart';
 
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> saveSucursal(Sucursal sucursal) {
-    return _db
-        .collection('sucursals')
-        .doc(sucursal.sucursalId)
-        .set(sucursal.toMap());
+  Future<void> saveDailies(DailiesSales dailies) {
+    return _db.collection('dailies').doc().set(dailies.toMap());
   }
 
-  Stream<List<Sucursal>> getSucursal() {
-    return _db.collection('sucursals').snapshots().map((snapshot) => snapshot
-        .docs
-        .map((document) => Sucursal.fromFirestore(document.data()))
+  Stream<List<DailiesSales>> getDailies() {
+    return _db.collection('dailies').snapshots().map((snapshot) => snapshot.docs
+        .map((document) => DailiesSales.fromFirestore(document.data()))
         .toList());
   }
 
-  Future<void> removeSucursal(String sucursalId) {
-    return _db.collection('sucursals').doc(sucursalId).delete();
+  Future<void> removeDailies(String sucursalId) {
+    return _db.collection('dailies').doc(sucursalId).delete();
   }
 }
